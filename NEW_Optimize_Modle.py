@@ -5,12 +5,14 @@ Email: chenghai@shanghaitech.edu.cn
 The ShangHaiTech University
 '''
 from sage.all import *
+from NEW_basic import *
 from NEW_CCF_Modle import Relay_Forward_Rate
 from NewSecondHopChannel import ComputeSecRate
 from scipy import optimize
 from CoF_LLL import Find_A_and_Rate
 import math
-from NEW_basic import *
+import copy
+
 
 #the varables to optimize are the all rate piece beta1~2L-1
 #per_s is [1,,,L]'s permutation, per_c is [L+1,2*L]'s permutation
@@ -23,12 +25,14 @@ def Linear_Program(entropy_coefficient_list,secChannel_constiant,source_rate_upb
         elif i>=L:
             C[i]=-(2*L-1-i)#Attention, the real object function coefficient should be positive
     # source rate is the coefficient list of rate pieces
-    SourseRate=[[0]*(2*L-1)]*L
+    SourseRate=[]
+    for i in range(L):
+        SourseRate.extend([[0]*(2*L-1)])
     for i in range(0,L):
         #piece_mount=per_c[i]-per_s[i]
         for j in range(0,2*L-1):
             #SourseRate[i][j]=[0]*(2*L-1)
-            if j>=per_s[i]-1&j<=per_c[i]-1:
+            if (j>=per_s[i])&(j<=per_c[i]+1):
                 SourseRate[i][j]=1
     #construct the linear programming equation
     A_ConstriantMatrix=SourseRate+entropy_coefficient_list
@@ -101,7 +105,7 @@ def RandomSearch(P_Search_Alg, H_a, H_b, P_con, P_relay, per_s, per_c):
         beta_opt=ResSearch.x
         sum_rate_opt=-ResSearch.fun
     else:
-        Exception("error: Not Such Search Algorithm!")
+        raise Exception("error: Not Such Search Algorithm!")
     return beta_opt, sum_rate_opt
     
 

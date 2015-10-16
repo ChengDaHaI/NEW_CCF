@@ -6,7 +6,7 @@ from sage.all import *
 from numpy import arange
 from sage.parallel.all import *
 import time
-from CoF_basic import *
+from NEW_basic import *
 from itertools import chain, combinations
 
 #produce the subsets
