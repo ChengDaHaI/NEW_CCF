@@ -123,14 +123,5 @@ if __name__=="__main__":
     beta_opt, sum_rate_opt=RandomSearch('differential_evolution', H_a, H_b, P_con, P_relay, per_s, per_c)
     print "optimal beta list:", beta_opt
     print "optimal sum rate:", sum_rate_opt
-    '''
-    #just for test the source rate up bound
-    source_rate_upbound_list=[5,4.5,3.5]
-    #produce the conditional entropy and the coefficient of rate piece
-    conditional_entropy_list,entropy_coefficient_list=Relay_Forward_Rate(beta_s,beta_c,per_s,per_c,A)
-    #the second hop channel capacity constriant
-    SecChannel_constiant=ComputeSecRate(L,P_relay,H_b)
-    Res=Linear_Program(entropy_coefficient_list, SecChannel_constiant, source_rate_upbound_list, per_s, per_c)
-    print Res
-    '''
+    
     
